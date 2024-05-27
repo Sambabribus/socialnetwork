@@ -1,4 +1,5 @@
 <?php
+
 $action = $_GET["action"] ?? "display";
 
 switch ($action) {
@@ -29,9 +30,8 @@ switch ($action) {
     $posts = GetAllPosts();
 
     include "../models/CommentManager.php";
-    $commentManager = new CommentManager($pdo); // Assuming $pdo is your database connection
-
     $comments = array();
+    $commentManager = new CommentManager($PDO);
 
     foreach ($posts as $post) {
       $postId = $post['id'];

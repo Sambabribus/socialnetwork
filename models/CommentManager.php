@@ -26,3 +26,27 @@ function GetAllCommentsFromUserId($userId)
   );
   return $response->fetchAll();
 }
+
+class CommentManager
+{
+  private $pdo;
+
+  public function __construct($pdo)
+  {
+    $this->pdo = $pdo;
+  }
+
+  public function GetAllCommentsFromPostId($postId)
+  {
+    $sql = "SELECT comment.id, comment.content, comment.created_at, user.nickname 
+              FROM comment 
+              INNER JOIN user ON comment.user_id = user.id 
+              WHERE comment.post_id = ?";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$postId]);
+    $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $comments;
+  }
+}
