@@ -31,6 +31,13 @@ switch ($action) {
 
     include "../models/CommentManager.php";
     $comments = array();
+
+    if (isset($_GET['search'])) {
+      $posts = SearchInPosts($_GET['search']);
+    } else {
+      $posts = GetAllPosts();
+    }
+
     $commentManager = new CommentManager($PDO);
 
     foreach ($posts as $post) {
